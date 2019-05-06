@@ -42,7 +42,6 @@ namespace WpfMailSender
                 {
                     sCl.EnableSsl = true;
                     sCl.UseDefaultCredentials = false;
-                    //sCl.DeliveryMethod = SmtpDeliveryMethod.Network;
                     sCl.Credentials = new NetworkCredential ( sett.ServerUser, sett.ServerPassword );
 
                     try

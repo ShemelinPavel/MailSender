@@ -95,7 +95,7 @@ namespace WpfMailSender
         /// <returns>Настройки</returns>
         static public Settings GetDefaultMailSenderSettings ()
         {
-            Settings sett = new Settings ( "smtp.mail.ru", 465, "pauls0@mail.ru", "" );
+            Settings sett = new Settings ( "smtp.mail.ru", 25, "", "" );
             return sett;
         }
     }
