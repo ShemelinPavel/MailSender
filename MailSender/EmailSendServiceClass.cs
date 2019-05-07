@@ -8,8 +8,18 @@ using System.Net.Mail;
 
 namespace WpfMailSender
 {
+    /// <summary>
+    /// стат. служебный класс службы рассылки
+    /// </summary>
     static class EmailSendServiceClass
     {
+        /// <summary>
+        /// выполенние рассылки почтовых сообщений
+        /// </summary>
+        /// <param name="mails">массив почтовых сообщений</param>
+        /// <param name="sett">текущие настройки</param>
+        /// <param name="errMessage">сообщение об ошибке</param>
+        /// <returns>задача выполнена да/нет</returns>
         static public bool SendEmails(Email[] mails, Settings sett, out string errMessage)
         {
 
@@ -27,6 +37,13 @@ namespace WpfMailSender
             return true;
         }
 
+        /// <summary>
+        /// посылка почтового сообщения
+        /// </summary>
+        /// <param name="email">почтовое сообщение</param>
+        /// <param name="sett">настройки</param>
+        /// <param name="errorMessage">сообщение об ошибке</param>
+        /// <returns>задача выполнена да/нет</returns>
         static bool SendEmail(Email email, Settings sett, out string errorMessage)
         {
             errorMessage = "";

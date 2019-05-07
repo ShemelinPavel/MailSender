@@ -11,11 +11,29 @@ namespace WpfMailSender
     /// </summary>
     public class Settings
     {
+        /// <summary>
+        /// почтовый сервер
+        /// </summary>
         string srvName;
+
+        /// <summary>
+        /// порт почт. сервера
+        /// </summary>
         int srvPort;
+
+        /// <summary>
+        /// почтовый аккаунт (адрес) с которого идет рассылка
+        /// </summary>
         string srvUser;
+
+        /// <summary>
+        /// пароль почтового аккаунта с которого идет рассылка
+        /// </summary>
         string srvPass;
 
+        /// <summary>
+        /// почтовый сервер
+        /// </summary>
         public string ServerName
         {
             get
@@ -32,6 +50,10 @@ namespace WpfMailSender
                 }
             }
         }
+
+        /// <summary>
+        /// порт почт. сервера
+        /// </summary>
         public int ServerPort
         {
             get
@@ -48,6 +70,10 @@ namespace WpfMailSender
                 }
             }
         }
+        
+        /// <summary>
+        /// почтовый аккаунт (адрес) с которого идет рассылка
+        /// </summary>
         public string ServerUser
         {
             get
@@ -58,7 +84,7 @@ namespace WpfMailSender
                 {
                     throw new ArgumentException ( "Не указана учетная запись почты" );
                 }
-                else if(!(EmailSenderMailObjects.ValidEmail ( value )))
+                else if(!(EmailSenderCommonObjects.ValidEmail ( value )))
                 {
                     throw new ArgumentException ( $"Неверный формат почтового адреса {value}" );
                 }
@@ -68,6 +94,10 @@ namespace WpfMailSender
                 }
             }
         }
+
+        /// <summary>
+        /// пароль почтового аккаунта с которого идет рассылка
+        /// </summary>
         public string ServerPassword
         {
             get
@@ -79,6 +109,14 @@ namespace WpfMailSender
                 this.srvName = value;
             }
         }
+
+        /// <summary>
+        /// конструтор настроек почт. сервера
+        /// </summary>
+        /// <param name="serverName">имя сервера</param>
+        /// <param name="serverPort">порт сервера</param>
+        /// <param name="serverUser">аккаунт рассылки</param>
+        /// <param name="serverPassword">пароль аккаунта рассылки</param>
         public Settings ( string serverName, int serverPort, string serverUser, string serverPassword )
         {
             this.ServerName = serverName;
@@ -87,6 +125,9 @@ namespace WpfMailSender
             this.srvPass = serverPassword;
         }
     }
+    /// <summary>
+    /// стат. класс настроек почт. сервера
+    /// </summary>
     static class EmailSenderSettings
     {
         /// <summary>

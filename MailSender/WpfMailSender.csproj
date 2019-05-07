@@ -53,12 +53,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="EmailSenderMailObjects.cs" />
     <Compile Include="EmailSenderSettings.cs" />
     <Compile Include="InfoWindow.xaml.cs">
       <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MailSenderCommonObjects.cs" />
+    <Compile Include="EmailSenderCommonObjects.cs" />
     <Compile Include="SchedulerClass.cs" />
     <Page Include="InfoWindow.xaml">
       <SubType>Designer</SubType>
