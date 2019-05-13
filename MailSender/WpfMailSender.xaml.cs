@@ -85,26 +85,26 @@ namespace WpfMailSender
         /// </summary>
         private void SendMail ()
         {
-            try
-            {
-                Email email = new Email ( EMailTo.Text, EMailSubj.Text, EMailMessage.Text );
-                Settings sett = new Settings ( ServerName.Text, Int32.Parse ( ServerPort.Text ), ServerUser.Text, ServerPassword.Password );
+            //try
+            //{
+            //    Email email = new Email ( EMailTo.Text, EMailSubj.Text, EMailMessage.Text );
+            //    Settings sett = new Settings ( ServerName.Text, Int32.Parse ( ServerPort.Text ), ServerUser.Text, ServerPassword.Password );
 
-                Email[] emails = new Email[] { email };
+            //    Email[] emails = new Email[] { email };
 
-                if (!(EmailSendServiceClass.SendEmails ( emails, sett, out string errMessage )))
-                {
-                    EmailSenderCommonObjects.InfoMessage ( this, errMessage, InfoType.Error );
-                }
-                else
-                {
-                    EmailSenderCommonObjects.InfoMessage ( this, "Отправка почты выполнена.", InfoType.Info );
-                }
-            }
-            catch (ArgumentException e)
-            {
-                EmailSenderCommonObjects.InfoMessage ( this, e.Message, InfoType.Error );
-            }
+            //    if (!(EmailSendServiceClass.SendEmails ( emails, sett, out string errMessage )))
+            //    {
+            //        EmailSenderCommonObjects.InfoMessage ( this, errMessage, InfoType.Error );
+            //    }
+            //    else
+            //    {
+            //        EmailSenderCommonObjects.InfoMessage ( this, "Отправка почты выполнена.", InfoType.Info );
+            //    }
+            //}
+            //catch (ArgumentException e)
+            //{
+            //    EmailSenderCommonObjects.InfoMessage ( this, e.Message, InfoType.Error );
+            //}
         }
     }
 }
