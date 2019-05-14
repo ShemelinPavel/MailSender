@@ -6,15 +6,70 @@ using System.Threading.Tasks;
 
 namespace WpfMailSender
 {
+    
+    public class MailSender
+    {
+        /// <summary>
+        /// описание отправителя
+        /// </summary>
+        string sendDescr;
+
+        /// <summary>
+        /// адрес эл. почты отправителя
+        /// </summary>
+        string sendEmail;
+
+        /// <summary>
+        /// описание отправителя
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return this.sendDescr;
+            }
+            set
+            {
+                this.sendDescr = value;
+            }
+        }
+
+        /// <summary>
+        /// адрес эл. почты отправителя
+        /// </summary>
+        public string Email
+        {
+            get
+            {
+                return this.sendEmail;
+            }
+            set
+            {
+                this.sendEmail = value;
+            }
+        }
+
+        public MailSender (string descr, string email)
+        {
+            this.Description = descr;
+            this.Email = email;
+        }
+    }
+    
     /// <summary>
     /// настройки почтового сервера
     /// </summary>
-    public class Settings
+    public class MailServer
     {
         /// <summary>
-        /// почтовый сервер
+        /// представление почтового сервера
         /// </summary>
-        string srvName;
+        string srvDescr;
+        
+        /// <summary>
+        /// хост почтового сервера
+        /// </summary>
+        string srvHost;
 
         /// <summary>
         /// порт почт. сервера
@@ -32,12 +87,34 @@ namespace WpfMailSender
         string srvPass;
 
         /// <summary>
-        /// почтовый сервер
+        /// использовать SSL
         /// </summary>
-        public string ServerName
+        bool srvUseSSL;
+
+        /// <summary>
+        /// представление почтового сервера
+        /// </summary>
+        public string Description
         {
             get
-            { return this.srvName; }
+            {
+              return this.srvDescr;
+            }
+            set
+            {
+                this.srvDescr = value;
+            }
+        }
+
+        /// <summary>
+        /// почтовый сервер
+        /// </summary>
+        public string Host
+        {
+            get
+            {
+                return this.srvHost;
+            }
             set
             {
                 if (value.Replace ( " ", "" ) == "")
@@ -46,7 +123,7 @@ namespace WpfMailSender
                 }
                 else
                 {
-                    this.srvName = value;
+                    this.srvHost = value;
                 }
             }
         }
@@ -54,15 +131,17 @@ namespace WpfMailSender
         /// <summary>
         /// порт почт. сервера
         /// </summary>
-        public int ServerPort
+        public int Port
         {
             get
-            { return this.srvPort; }
+            {
+                return this.srvPort;
+            }
             set
             {
                 if (value == 0)
                 {
-                    throw new ArgumentException ( "Не указан  порт почтового сервера" );
+                    throw new ArgumentException ( "Не указан порт почтового сервера" );
                 }
                 else
                 {
@@ -70,27 +149,29 @@ namespace WpfMailSender
                 }
             }
         }
-        
+
         /// <summary>
         /// почтовый аккаунт (адрес) с которого идет рассылка
         /// </summary>
-        public string ServerUser
+        public string User
         {
             get
-            { return this.srvUser; }
+            {
+                return this.srvUser;
+            }
             set
             {
                 if (value.Replace ( " ", "" ) == "")
                 {
                     throw new ArgumentException ( "Не указана учетная запись почты" );
                 }
-                else if(!(EmailSenderCommonObjects.ValidEmail ( value )))
+                else if (!(EmailSenderCommonObjects.ValidEmail ( value )))
                 {
                     throw new ArgumentException ( $"Неверный формат почтового адреса {value}" );
                 }
                 else
                 {
-                    this.srvName = value;
+                    this.srvUser = value;
                 }
             }
         }
@@ -98,7 +179,7 @@ namespace WpfMailSender
         /// <summary>
         /// пароль почтового аккаунта с которого идет рассылка
         /// </summary>
-        public string ServerPassword
+        public string UserPassword
         {
             get
             {
@@ -106,38 +187,62 @@ namespace WpfMailSender
             }
             set
             {
-                this.srvName = value;
+                this.srvPass = value;
+            }
+        }
+
+        /// <summary>
+        /// использовать SSL
+        /// </summary>
+        public bool UseSSL
+        {
+            get
+            {
+                return this.srvUseSSL;
+            }
+            set
+            {
+                this.srvUseSSL = value;
             }
         }
 
         /// <summary>
         /// конструтор настроек почт. сервера
         /// </summary>
-        /// <param name="serverName">имя сервера</param>
-        /// <param name="serverPort">порт сервера</param>
-        /// <param name="serverUser">аккаунт рассылки</param>
-        /// <param name="serverPassword">пароль аккаунта рассылки</param>
-        public Settings ( string serverName, int serverPort, string serverUser, string serverPassword )
+        /// <param name="descr">описание сервера</param>
+        /// <param name="host">хост сервера</param>
+        /// <param name="port">порт сервера</param>
+        /// <param name="user">аккаунт рассылки</param>
+        /// <param name="userPass">пароль аккаунта рассылки</param>
+        /// <param name="useSSL">использование SSL</param>
+        public MailServer ( string descr, string host, int port, string user, string userPass, bool useSSL = false )
         {
-            this.ServerName = serverName;
-            this.ServerPort = serverPort;
-            this.srvUser = serverUser;
-            this.srvPass = serverPassword;
+            this.Description = descr;
+            this.Host = host;
+            this.Port = port;
+            this.User = user;
+            this.UserPassword = userPass;
+            this.UseSSL = useSSL;
         }
     }
     /// <summary>
     /// стат. класс настроек почт. сервера
     /// </summary>
-    static class EmailSenderSettings
+    public static class EmailSenderSettings
     {
         /// <summary>
-        /// Получить настройки почт. сервера по умолчанию
+        /// почтовые серверы
         /// </summary>
-        /// <returns>Настройки</returns>
-        static public Settings GetDefaultMailSenderSettings ()
+        public static List<MailServer> MailServers { get; } = new List<MailServer>
         {
-            Settings sett = new Settings ( "smtp.mail.ru", 25, "", "" );
-            return sett;
-        }
+                new MailServer("Mail.ru", "smtp.mail.ru", 25, "test@mail.ru", "", true ),
+                new MailServer ( "Gmail.com", "smtp.gmail.com", 25, "test@gmail.com", "", true )
+        };
+
+        public static List<MailSender> MailSenders { get; } = new List<MailSender>
+        {
+                new MailSender("Тест 1", "test.mail.ru"),
+                new MailSender ( "Тест 2", "test.gmail.com")
+        };
     }
 }

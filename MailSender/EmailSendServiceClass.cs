@@ -20,12 +20,12 @@ namespace WpfMailSender
         /// <param name="sett">текущие настройки</param>
         /// <param name="errMessage">сообщение об ошибке</param>
         /// <returns>задача выполнена да/нет</returns>
-        static public bool SendEmails(Email[] mails, Settings sett, out string errMessage)
+        static public bool SendEmails(Email[] mails, MailServer mailServ, out string errMessage)
         {
 
             foreach (Email email in mails)
             {
-                if (!(SendEmail ( email, sett, out string errMes )))
+                if (!(SendEmail ( email, mailServ, out string errMes )))
                 {
                     errMessage = errMes;
                     return false;
@@ -44,22 +44,22 @@ namespace WpfMailSender
         /// <param name="sett">настройки</param>
         /// <param name="errorMessage">сообщение об ошибке</param>
         /// <returns>задача выполнена да/нет</returns>
-        static bool SendEmail(Email email, Settings sett, out string errorMessage)
+        static bool SendEmail(Email email, MailServer mailServ, out string errorMessage)
         {
             errorMessage = "";
 
-            using (MailMessage mMes = new MailMessage ( sett.ServerUser, email.To ))
+            using (MailMessage mMes = new MailMessage ( mailServ.User, email.To ))
             {
 
                 mMes.Subject = email.Subject;
                 mMes.Body = email.Content;
                 mMes.IsBodyHtml = false;
 
-                using (SmtpClient sCl = new SmtpClient ( sett.ServerName, sett.ServerPort ))
+                using (SmtpClient sCl = new SmtpClient ( mailServ.Host, mailServ.Port ))
                 {
                     sCl.EnableSsl = true;
                     sCl.UseDefaultCredentials = false;
-                    sCl.Credentials = new NetworkCredential ( sett.ServerUser, sett.ServerPassword );
+                    sCl.Credentials = new NetworkCredential ( mailServ.User, mailServ.UserPassword );
 
                     try
                     {

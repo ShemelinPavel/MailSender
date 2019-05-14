@@ -26,10 +26,10 @@ namespace WpfMailSender
         /// <param name="infoType">тип окна информация/ошибка</param>
         public static void InfoMessage ( Window ownWindow, string infoMessage , InfoType infoType )
         {
-            Window errWin = new InfoWindow ( infoType );
-            errWin.DataContext = infoMessage;
-            errWin.Owner = ownWindow;
-            errWin.Show ();
+            Window infoWin = new InfoWindow ( infoType );
+            infoWin.DataContext = infoMessage;
+            infoWin.Owner = ownWindow;
+            infoWin.Show ();
         }
 
         /// <summary>

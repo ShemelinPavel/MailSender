@@ -3,10 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MailSender"
+        xmlns:local="clr-namespace:WpfMailSender"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:linq2sql="clr-namespace:WpfMailSender.Data.LinqToSQL"
+        xmlns:tabic="clr-namespace:WpfMailSender.Components"
         mc:Ignorable="d"
-        Title="Рассылка писем" Height="450" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="16">
+        Title="Рассылка писем" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="16">
     <Grid>
         <Grid.Resources>
             <Style TargetType="fa:ImageAwesome">
@@ -28,7 +30,7 @@
             </MenuItem>
         </Menu>
 
-        <TabControl Grid.Row="1" Height="360">
+        <TabControl Name="MainTabControl" Grid.Row="1" Height="360">
             <TabItem Header="Списки рассылки">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -39,7 +41,25 @@
                     <ToolBarTray Grid.Row="0">
                         <ToolBar>
                             <TextBlock Text="Отправители:" Foreground="Black" VerticalAlignment="Center"/>
-                            <ComboBox MinWidth="150" Margin="5,0,5,0" SelectedIndex="0"></ComboBox>
+                            <ComboBox MinWidth="150" Margin="5,0,5,0" SelectedIndex="0" ItemsSource="{x:Static local:EmailSenderSettings.MailSenders}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel>
+                                            <TextBlock Text="{Binding Description}"/>
+                                            <DockPanel>
+                                                <DockPanel.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Opacity" Value="0.6"/>
+                                                    </Style>
+                                                </DockPanel.Resources>
+                                                <TextBlock Text="(" Margin="3, 0"/>
+                                                <TextBlock Text="{Binding Email}"/>
+                                                <TextBlock Text=")"/>
+                                            </DockPanel>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                             <Button ToolTip="Создать">
                                 <fa:ImageAwesome Icon="PlusSquare" Foreground="Green"></fa:ImageAwesome>
                             </Button>
@@ -60,7 +80,25 @@
                     <ToolBarTray Grid.Row="1">
                         <ToolBar>
                             <TextBlock Text="Серверы:" Foreground="Black" VerticalAlignment="Center"/>
-                            <ComboBox MinWidth="150" Margin="5,0,5,0" SelectedIndex="0"></ComboBox>
+                            <ComboBox MinWidth="150" Margin="5,0,5,0" SelectedIndex="0" ItemsSource="{x:Static local:EmailSenderSettings.MailServers}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel>
+                                            <TextBlock Text="{Binding Description}"/>
+                                            <DockPanel>
+                                                <DockPanel.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Opacity" Value="0.6"/>
+                                                    </Style>
+                                                </DockPanel.Resources>
+                                                <TextBlock Text="(порт:" Margin="3, 0"/>
+                                                <TextBlock Text="{Binding Port}"/>
+                                                <TextBlock Text=")"/>
+                                            </DockPanel>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                             <Button ToolTip="Создать">
                                 <fa:ImageAwesome Icon="PlusSquare" Foreground="Green"></fa:ImageAwesome>
                             </Button>
@@ -85,13 +123,17 @@
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Grid.Row="2" Header="Получатели писем:" Margin="0, 5, 0, 0">
-                        <DataGrid AutoGenerateColumns="False">
+                        <GroupBox.Resources>
+                            <linq2sql:MailSenderDB x:Key="Database"/>
+                        </GroupBox.Resources>
+                        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightBlue"
+                                  
+                                  ItemsSource="{Binding Recipient, Source={StaticResource Database}}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" MinWidth="50"/>
-                                <DataGridTextColumn Header="Имя" MinWidth="160"/>
-                                <DataGridTextColumn Header="Email" Width="*"/>
+                                <DataGridTextColumn Header="ID" MinWidth="50" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Имя" MinWidth="160" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email}"/>
                             </DataGrid.Columns>
-
                         </DataGrid>
                     </GroupBox>
                 </Grid>
@@ -212,7 +254,7 @@
                                 </ListBox>
                             </DockPanel>
                         </GroupBox>
-                        <GroupBox Grid.Column="2" Header="Письмо:">
+                        <GroupBox Grid.Column="2">
                             <DockPanel>
                                 <GroupBox Header="Заголовок:" DockPanel.Dock="Top">
                                     <TextBox/>
@@ -226,41 +268,9 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="Settings" Header="Настройки" FontSize="14">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="4*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Имя сервера:" Padding="0,2" FontSize="14" Foreground="Black"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" x:Name="ServerName" FontSize="14"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Порт сервера:" Padding="0,2" FontSize="14" Foreground="Black"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" x:Name="ServerPort" FontSize="14"/>
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Учетная запись почты:" Padding="0,2" FontSize="14" Foreground="Black"/>
-                    <TextBox Grid.Column="1" Grid.Row="2" x:Name="ServerUser" FontSize="14"/>
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Пароль учетной записи:" Padding="0,2" FontSize="14" Foreground="Black"/>
-                    <PasswordBox Grid.Column="1" Grid.Row="3" x:Name="ServerPassword" FontSize="14"/>
-                </Grid>
-            </TabItem>
         </TabControl>
-        <DockPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0, 5, 0, 5">
-            <Button x:Name="Send" Width="100" Click="Send_Click">
-                <TextBlock Text="Послать"/>
-            </Button>
-            <Button x:Name="Close" Width="100" Click="Close_Click">
-                <TextBlock Text="Закрыть"/>
-            </Button>
+        <DockPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
+            <tabic:TabItemsControl Width="200" Margin="0, 1, 5, 0" LeftButtonClick="TabItemsControl_LeftButtonClick" RightButtonClick="TabItemsControl_RightButtonClick"/>
         </DockPanel>
     </Grid>
 </Window>
