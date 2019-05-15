@@ -17,7 +17,7 @@ namespace WpfMailSender
         /// выполенние рассылки почтовых сообщений
         /// </summary>
         /// <param name="mails">массив почтовых сообщений</param>
-        /// <param name="sett">текущие настройки</param>
+        /// <param name="mailServ">почтовый сервер</param>
         /// <param name="errMessage">сообщение об ошибке</param>
         /// <returns>задача выполнена да/нет</returns>
         static public bool SendEmails(Email[] mails, MailServer mailServ, out string errMessage)
@@ -41,7 +41,7 @@ namespace WpfMailSender
         /// посылка почтового сообщения
         /// </summary>
         /// <param name="email">почтовое сообщение</param>
-        /// <param name="sett">настройки</param>
+        /// <param name="mailServ">почтовый сервер</param>
         /// <param name="errorMessage">сообщение об ошибке</param>
         /// <returns>задача выполнена да/нет</returns>
         static bool SendEmail(Email email, MailServer mailServ, out string errorMessage)
