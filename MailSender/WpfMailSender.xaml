@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMailSender"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:xceed_toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:linq2sql="clr-namespace:WpfMailSender.Data.LinqToSQL"
-        xmlns:tabic="clr-namespace:WpfMailSender.Components"
+        xmlns:user_components="clr-namespace:WpfMailSender.Components"
         mc:Ignorable="d"
         Title="Рассылка писем" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="16">
     <Grid>
@@ -71,9 +72,13 @@
                             </Button>
                         </ToolBar>
                         <ToolBar>
-                            <TextBlock Text="Перейти в планировщик:"/>
-                            <Button>
-                                <fa:ImageAwesome Icon="CalendarCheckOutline" Foreground="Blue"/>
+                            <Button Click="Button_Click">
+                                <DockPanel VerticalAlignment="Center">
+                                    <TextBlock Text="Перейти в планировщик:"/>
+                                    <TextBlock> 
+                                        <fa:ImageAwesome Icon="CalendarCheckOutline" Foreground="Blue" Margin="3,0"/>
+                                    </TextBlock>
+                                </DockPanel>
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
@@ -127,7 +132,6 @@
                             <linq2sql:MailSenderDB x:Key="Database"/>
                         </GroupBox.Resources>
                         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightBlue"
-                                  
                                   ItemsSource="{Binding Recipient, Source={StaticResource Database}}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" MinWidth="50" Binding="{Binding Id}"/>
@@ -150,7 +154,7 @@
                         <Calendar></Calendar>
                         <DockPanel Margin="0, 5">
                             <TextBlock VerticalAlignment="Center" Text="Время:" Margin="3, 0"/>
-                            <TextBox Text="Тут время"/>
+                            <xceed_toolkit:TimePicker/>
                         </DockPanel>
                         <StackPanel Margin="0, 10">
                             <StackPanel.Resources>
@@ -191,7 +195,7 @@
                     <GridSplitter Grid.Column="1" Width="5" VerticalAlignment="Stretch" Background="Transparent"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="EmailEdit" Header="Редактор" FontSize="14">
+            <TabItem x:Name="EmailEdit" Header="Редактор" FontSize="14" TabIndex="2147483645">
                 <TabItem.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -247,7 +251,7 @@
                                         </Grid>
                                     </Button>
                                 </StackPanel>
-                                <ListBox>
+                                <ListBox TabIndex="2147483646">
                                     <ListBoxItem>Письмо 1</ListBoxItem>
                                     <ListBoxItem>Письмо 2</ListBoxItem>
                                     <ListBoxItem>Письмо 3</ListBoxItem>
@@ -270,7 +274,7 @@
             </TabItem>
         </TabControl>
         <DockPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
-            <tabic:TabItemsControl Width="200" Margin="0, 1, 5, 0" LeftButtonClick="TabItemsControl_LeftButtonClick" RightButtonClick="TabItemsControl_RightButtonClick"/>
+            <user_components:TabItemsControl Width="200" Margin="0, 1, 5, 0" LeftButtonClick="TabItemsControl_LeftButtonClick" RightButtonClick="TabItemsControl_RightButtonClick"/>
         </DockPanel>
     </Grid>
 </Window>

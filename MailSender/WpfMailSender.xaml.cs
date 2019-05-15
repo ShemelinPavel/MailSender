@@ -60,7 +60,7 @@ namespace WpfMailSender
         /// <summary>
         /// обработчик события щелчка мышью "вправо"
         /// </summary>
-        /// <param name="sender">объект-инициатор</param>
+        /// <param name="sender">объект-источник</param>
         /// <param name="e">параметры события</param>
         private void TabItemsControl_RightButtonClick ( object sender, EventArgs e )
         {
@@ -74,6 +74,18 @@ namespace WpfMailSender
             {
                 MainTabControl.SelectedIndex = 0;
             }
+        }
+
+        /// <summary>
+        /// обработчик события щелчка мышью кнопки "Переход в планировщик"
+        /// </summary>
+        /// <param name="sender">объект-источник</param>
+        /// <param name="e">параметры события</param>
+        private void Button_Click ( object sender, RoutedEventArgs e )
+        {
+            if (MainTabControl.Items.Count == 0) return;
+
+            MainTabControl.SelectedIndex = 1;
         }
     }
 }
