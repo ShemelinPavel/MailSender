@@ -1,0 +1,7 @@
+C:\Repo\MailSender\MailSender.Console\bin\Debug\MailSender.Console.exe.config
+C:\Repo\MailSender\MailSender.Console\bin\Debug\MailSender.Console.exe
+C:\Repo\MailSender\MailSender.Console\bin\Debug\MailSender.Console.pdb
+C:\Repo\MailSender\MailSender.Console\obj\Debug\MailSender.ConsoleTest.csprojAssemblyReference.cache
+C:\Repo\MailSender\MailSender.Console\obj\Debug\MailSender.ConsoleTest.csproj.CoreCompileInputs.cache
+C:\Repo\MailSender\MailSender.Console\obj\Debug\MailSender.Console.exe
+C:\Repo\MailSender\MailSender.Console\obj\Debug\MailSender.Console.pdb
