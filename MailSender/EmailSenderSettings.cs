@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace WpfMailSender
 {
-    
+    /// <summary>
+    /// отправитель почтовых сообщений
+    /// </summary>
     public class MailSender
     {
         /// <summary>
@@ -49,6 +51,11 @@ namespace WpfMailSender
             }
         }
 
+        /// <summary>
+        /// конструктор отправителя почт. сообщений
+        /// </summary>
+        /// <param name="descr">описание (имя)</param>
+        /// <param name="email">адрес эл. почты</param>
         public MailSender (string descr, string email)
         {
             this.Description = descr;
@@ -207,7 +214,7 @@ namespace WpfMailSender
         }
 
         /// <summary>
-        /// конструтор настроек почт. сервера
+        /// конструтор почт. сервера
         /// </summary>
         /// <param name="descr">описание сервера</param>
         /// <param name="host">хост сервера</param>
@@ -239,6 +246,9 @@ namespace WpfMailSender
                 new MailServer ( "Gmail.com", "smtp.gmail.com", 25, "test@gmail.com", "", true )
         };
 
+        /// <summary>
+        /// отправители почт. сообщений
+        /// </summary>
         public static List<MailSender> MailSenders { get; } = new List<MailSender>
         {
                 new MailSender("Тест 1", "test.mail.ru"),
