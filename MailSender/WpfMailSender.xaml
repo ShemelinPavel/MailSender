@@ -3,46 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfMailSender"
+        xmlns:lib="clr-namespace:WpfMailSender.lib;assembly=WpfMailSender.lib"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:xceed_toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:linq2sql="clr-namespace:WpfMailSender.Data.LinqToSQL"
+        xmlns:linq2sql="clr-namespace:WpfMailSender.lib.Data.LinqToSQL;assembly=WpfMailSender.lib"
         xmlns:user_components="clr-namespace:WpfMailSender.Components"
         mc:Ignorable="d"
-        Title="Рассылка писем" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="16">
-    <Grid>
-        <Grid.Resources>
+        Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="16"
+        DataContext="{Binding WpfMainWindowModel, Source={StaticResource Locator}}"
+        Title="{Binding mvvmTitle}"
+        >
+    <DockPanel>
+        <DockPanel.Resources>
             <Style TargetType="fa:ImageAwesome">
                 <Setter Property="MaxHeight" Value="20"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <Style TargetType="Button">
                 <Setter Property="MaxHeight" Value="28"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        </DockPanel.Resources>
 
-        <Menu Grid.Row="0" HorizontalAlignment="Left" Margin="0" Width="400" VerticalAlignment="Top" FontSize="14">
+        <Menu DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="0" Width="400" VerticalAlignment="Top" FontSize="14">
             <MenuItem Header="File...">
                 <MenuItem Header="Close" Click="MenuItem_Close_Click"/>
             </MenuItem>
         </Menu>
 
-        <TabControl Name="MainTabControl" Grid.Row="1" Height="360">
+        <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
+            <user_components:TabItemsControl Width="200" Margin="0, 1, 5, 0" LeftButtonClick="TabItemsControl_LeftButtonClick" RightButtonClick="TabItemsControl_RightButtonClick"/>
+        </DockPanel>
+        <TabControl Name="MainTabControl">
             <TabItem Header="Списки рассылки">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <ToolBarTray Grid.Row="0">
                         <ToolBar>
                             <TextBlock Text="Отправители:" Foreground="Black" VerticalAlignment="Center"/>
-                            <ComboBox MinWidth="150" Margin="5,0,5,0" SelectedIndex="0" ItemsSource="{x:Static local:EmailSenderSettings.MailSenders}">
+                            <ComboBox MinWidth="150" Margin="5,0,5,0" SelectedIndex="0" ItemsSource="{x:Static lib:EmailSenderSettings.MailSenders}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel>
@@ -81,11 +83,9 @@
                                 </DockPanel>
                             </Button>
                         </ToolBar>
-                    </ToolBarTray>
-                    <ToolBarTray Grid.Row="1">
-                        <ToolBar>
+                        <ToolBar Band="1">
                             <TextBlock Text="Серверы:" Foreground="Black" VerticalAlignment="Center"/>
-                            <ComboBox MinWidth="150" Margin="5,0,5,0" SelectedIndex="0" ItemsSource="{x:Static local:EmailSenderSettings.MailServers}">
+                            <ComboBox MinWidth="150" Margin="5,0,5,0" SelectedIndex="0" ItemsSource="{x:Static lib:EmailSenderSettings.MailServers}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel>
@@ -114,7 +114,7 @@
                                 <fa:ImageAwesome Icon="Trash" Foreground="Red"></fa:ImageAwesome>
                             </Button>
                         </ToolBar>
-                        <ToolBar>
+                        <ToolBar Band="1">
                             <TextBlock Text="Адресаты:"/>
                             <Button ToolTip="Создать">
                                 <fa:ImageAwesome Icon="PlusSquare" Foreground="Green"></fa:ImageAwesome>
@@ -127,19 +127,9 @@
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-                    <GroupBox Grid.Row="2" Header="Получатели писем:" Margin="0, 5, 0, 0">
-                        <GroupBox.Resources>
-                            <linq2sql:MailSenderDB x:Key="Database"/>
-                        </GroupBox.Resources>
-                        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightBlue"
-                                  ItemsSource="{Binding Recipient, Source={StaticResource Database}}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" MinWidth="50" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Имя" MinWidth="160" Binding="{Binding Description}"/>
-                                <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
+                    <DockPanel Grid.Row="1" Margin="0, 3, 0, 3">
+                        <user_components:RecipientsInfoView/>
+                    </DockPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="Планировщик">
@@ -189,7 +179,7 @@
                     </StackPanel>
                     <GroupBox Grid.Column="2" Header="Задачи:">
                         <ListBox>
-                            
+
                         </ListBox>
                     </GroupBox>
                     <GridSplitter Grid.Column="1" Width="5" VerticalAlignment="Stretch" Background="Transparent"/>
@@ -273,8 +263,5 @@
                 </TabItem.Content>
             </TabItem>
         </TabControl>
-        <DockPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
-            <user_components:TabItemsControl Width="200" Margin="0, 1, 5, 0" LeftButtonClick="TabItemsControl_LeftButtonClick" RightButtonClick="TabItemsControl_RightButtonClick"/>
-        </DockPanel>
-    </Grid>
+    </DockPanel>
 </Window>
