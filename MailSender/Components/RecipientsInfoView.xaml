@@ -15,7 +15,7 @@
             <TextBlock Text="Поиск:"/>
             <TextBox Margin="5,0"/>
         </DockPanel>
-        <Button DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="10,5,10,5" Padding="3">
+        <Button DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="10,5,10,5" Padding="3" Command="{Binding mvvmRefreshDataCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:ImageAwesome Height="16" Icon="Refresh"/>
                 <TextBlock Text="Обновить" Margin="3,0"/>

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using WpfMailSender.lib.Data.LinqToSQL;
 using WpfMailSender.lib.Services.Interfaces;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 
 namespace WpfMailSender.ViewModel
 {
@@ -26,19 +28,28 @@ namespace WpfMailSender.ViewModel
         public ObservableCollection<Recipient> mvvmRecipients
         {
             get => recipCol;
-            set => Set ( ref recipCol, value );
+            private set => Set ( ref recipCol, value );
         }
 
         public WpfMainWindowViewModel ( IRecipientsData recipientsData )
         {
             recipData = recipientsData;
 
-            LoadData ();
+            mvvmRefreshDataCommand = new RelayCommand ( OnRefreshDataCommandExecute , CanRefreshDataCommandExecute );
         }
 
         private void LoadData ()
         {
-            recipCol = new ObservableCollection<Recipient> ( recipData.GetAll () );
+            mvvmRecipients = new ObservableCollection<Recipient> ( recipData.GetAll () );
         }
+
+        #region Commands
+        public ICommand mvvmRefreshDataCommand { get; }
+        #endregion
+
+        private bool CanRefreshDataCommandExecute() => true;
+        private void OnRefreshDataCommandExecute() => LoadData ();
+
+
     }
 }

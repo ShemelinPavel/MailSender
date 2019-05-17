@@ -88,6 +88,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\RecipientsInfoEditor.xaml.cs">
+      <DependentUpon>RecipientsInfoEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\RecipientsInfoView.xaml.cs">
       <DependentUpon>RecipientsInfoView.xaml</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
     <Compile Include="InfoWindow.xaml.cs">
       <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Components\RecipientsInfoEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\RecipientsInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
