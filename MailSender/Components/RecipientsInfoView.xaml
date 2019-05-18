@@ -22,7 +22,7 @@
             </StackPanel>
         </Button>
         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightBlue"
-                                ItemsSource="{Binding mvvmRecipients}"  >
+                                ItemsSource="{Binding mvvmRecipients}"  SelectedItem="{Binding mvvmSelectedRecipient}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" MinWidth="50" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Имя" MinWidth="160" Binding="{Binding Description}"/>

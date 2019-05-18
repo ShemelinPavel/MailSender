@@ -17,6 +17,7 @@ namespace WpfMailSender.ViewModel
         private string _title = "Рассылка писем wpf+mvvm";
         private readonly IRecipientsData recipData;
         private ObservableCollection<Recipient> recipCol;
+        private Recipient selrecipient;
 
 
         public string mvvmTitle
@@ -31,11 +32,17 @@ namespace WpfMailSender.ViewModel
             private set => Set ( ref recipCol, value );
         }
 
+        public Recipient mvvmSelectedRecipient
+        {
+            get => selrecipient;
+            set => Set ( ref selrecipient, value );
+        }
+
         public WpfMainWindowViewModel ( IRecipientsData recipientsData )
         {
             recipData = recipientsData;
 
-            mvvmRefreshDataCommand = new RelayCommand ( OnRefreshDataCommandExecute , CanRefreshDataCommandExecute );
+            mvvmRefreshDataCommand = new RelayCommand ( OnRefreshDataCommandExecute, CanRefreshDataCommandExecute );
         }
 
         private void LoadData ()
@@ -47,8 +54,8 @@ namespace WpfMailSender.ViewModel
         public ICommand mvvmRefreshDataCommand { get; }
         #endregion
 
-        private bool CanRefreshDataCommandExecute() => true;
-        private void OnRefreshDataCommandExecute() => LoadData ();
+        private bool CanRefreshDataCommandExecute () => true;
+        private void OnRefreshDataCommandExecute () => LoadData ();
 
 
     }

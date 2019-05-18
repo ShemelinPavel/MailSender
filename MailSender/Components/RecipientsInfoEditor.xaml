@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfMailSender.Components"
              mc:Ignorable="d" 
-             d:DesignHeight="370" d:DesignWidth="300">
+             d:DesignHeight="370" d:DesignWidth="300"
+             DataContext="{Binding WpfMainWindowModel, Source={StaticResource Locator}}"
+             >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -20,9 +22,9 @@
         <TextBlock Text="ID:" Grid.Column="0" Grid.Row="0"/>
         <TextBlock Text="Наименование:" Grid.Column="0" Grid.Row="1"/>
         <TextBlock Text="Email:" Grid.Column="0" Grid.Row="2"/>
-        <TextBox Grid.Column="1" Grid.Row="0"/>
-        <TextBox Grid.Column="1" Grid.Row="1"/>
-        <TextBox Grid.Column="1" Grid.Row="2"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding mvvmSelectedRecipient.Id}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding mvvmSelectedRecipient.Description}"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding mvvmSelectedRecipient.Email}"/>
         <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Сохранить" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,10" Padding="20,5"></Button>
     </Grid>
 </UserControl>
