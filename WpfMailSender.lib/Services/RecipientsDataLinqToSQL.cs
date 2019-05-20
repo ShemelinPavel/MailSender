@@ -21,5 +21,22 @@ namespace WpfMailSender.lib.Services
         {
             return dbcontext.Recipient.ToArray ();
         }
+
+        public int Create(Recipient recipient)
+        {
+            if (recipient.Id != 0) return recipient.Id;
+            dbcontext.Recipient.InsertOnSubmit ( recipient );
+            Save ();
+            return recipient.Id;
+        }
+
+        public void Write ( Recipient recipient )
+        {
+            if (dbcontext.Recipient.Contains ( recipient )) return;
+
+            dbcontext.Recipient.InsertOnSubmit ( recipient );
+        }
+
+        public void Save () => dbcontext.SubmitChanges ();
     }
 }

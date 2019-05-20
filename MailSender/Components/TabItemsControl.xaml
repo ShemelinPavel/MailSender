@@ -6,12 +6,14 @@
              xmlns:local="clr-namespace:WpfMailSender.Components"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="200">
-    <UniformGrid Rows="1" ButtonBase.Click="UniformGrid_Click">
-        <Button Name="LeftArrowButton">
+             d:DesignHeight="30" d:DesignWidth="200"
+             DataContext="{Binding WpfMainWindowModel, Source={StaticResource Locator}}"
+             >
+    <UniformGrid Rows="1">
+        <Button Command="{Binding mvvvmClickLeftArrowTabItemsControlCommand}" Name="LeftArrowButton">
             <fa:ImageAwesome Icon="ArrowCircleLeft"/>
         </Button>
-        <Button Name="RightArrowButton">
+        <Button Command="{Binding mvvvmClickRightArrowTabItemsControlCommand}" Name="RightArrowButton">
             <fa:ImageAwesome Icon="ArrowCircleRight"/>
         </Button>
     </UniformGrid>

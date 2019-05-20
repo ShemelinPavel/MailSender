@@ -45,8 +45,7 @@ namespace WpfMailSender.ViewModel
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
-            SimpleIoc.Default.Unregister<MailSenderDB> ();
-            SimpleIoc.Default.Register ( () => new MailSenderDB () );
+            if (!SimpleIoc.Default.IsRegistered<MailSenderDB> ()) SimpleIoc.Default.Register ( () => new MailSenderDB () );
             SimpleIoc.Default.Register<IRecipientsData, RecipientsDataLinqToSQL> ();
 
             //SimpleIoc.Default.Unregister<WpfMainWindowViewModel> ();

@@ -6,6 +6,7 @@
         xmlns:lib="clr-namespace:WpfMailSender.lib;assembly=WpfMailSender.lib"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:xceed_toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:WpfMailSender"
         xmlns:linq2sql="clr-namespace:WpfMailSender.lib.Data.LinqToSQL;assembly=WpfMailSender.lib"
         xmlns:user_components="clr-namespace:WpfMailSender.Components"
         xmlns:interact="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -13,10 +14,11 @@
         Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="16"
         DataContext="{Binding WpfMainWindowModel, Source={StaticResource Locator}}"
         Title="{Binding mvvmTitle}"
+        Name="WpfMainWindow"
         >
     <interact:Interaction.Triggers>
         <interact:EventTrigger EventName="Loaded">
-            <interact:InvokeCommandAction Command="{Binding mvvmRefreshDataCommand}"></interact:InvokeCommandAction>
+            <interact:InvokeCommandAction Command="{Binding mvvmWpfMainWindowLoaded}" CommandParameter="{Binding ElementName=WpfMainWindow}"></interact:InvokeCommandAction>
         </interact:EventTrigger>
     </interact:Interaction.Triggers>
     <DockPanel>
@@ -33,12 +35,12 @@
 
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="0" Width="400" VerticalAlignment="Top" FontSize="14">
             <MenuItem Header="File...">
-                <MenuItem Header="Close" Click="MenuItem_Close_Click"/>
+                <MenuItem Header="Close" Command="{Binding mvvvmCloseWpfMainWindowCommand}" CommandParameter="{Binding ElementName=WpfMainWindow}"/>
             </MenuItem>
         </Menu>
 
         <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0, 0, 0, 0">
-            <user_components:TabItemsControl Width="200" Margin="0, 1, 5, 0" LeftButtonClick="TabItemsControl_LeftButtonClick" RightButtonClick="TabItemsControl_RightButtonClick"/>
+            <user_components:TabItemsControl Width="200" Margin="0, 1, 5, 0"/>
         </DockPanel>
         <TabControl Name="MainTabControl">
             <TabItem Header="Списки рассылки">
@@ -80,7 +82,7 @@
                             </Button>
                         </ToolBar>
                         <ToolBar>
-                            <Button Click="Button_Click">
+                            <Button Command="{Binding mvvvmGotoSchedulerCommand}" CommandParameter="{Binding ElementName=MainTabControl}">
                                 <DockPanel VerticalAlignment="Center">
                                     <TextBlock Text="Перейти в планировщик:"/>
                                     <TextBlock> 

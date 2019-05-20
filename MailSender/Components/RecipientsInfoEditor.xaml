@@ -25,6 +25,19 @@
         <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding mvvmSelectedRecipient.Id}"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding mvvmSelectedRecipient.Description}"/>
         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding mvvmSelectedRecipient.Email}"/>
-        <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Сохранить" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,10" Padding="20,5"></Button>
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Сохранить" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,10" Padding="20,5"
+                Command="{Binding mvvmWriteRecipientDataCommand}"
+                CommandParameter="{Binding mvvmSelectedRecipient}">
+            </Button>
+            <Button Grid.Column="1" Content="Новый" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,10" Padding="20,5"
+                Command="{Binding mvvmCreateRecipientDataCommand}">
+            </Button>
+
+        </Grid>
     </Grid>
 </UserControl>

@@ -20,32 +20,9 @@ namespace WpfMailSender.Components
     /// </summary>
     public partial class TabItemsControl : UserControl
     {
-        public event EventHandler LeftButtonClick;
-        public event EventHandler RightButtonClick;
-
-        private void OnLeftButtonClick ( EventArgs e ) => LeftButtonClick ( this, e );
-        private void OnRightButtonClick ( EventArgs e ) => RightButtonClick ( this, e );
-
         public TabItemsControl ()
         {
             InitializeComponent ();
-        }
-               
-        private void UniformGrid_Click ( object sender, RoutedEventArgs e )
-        {
-            if (!(e.Source is Button)) return;
-
-            Button button = (Button)e.Source;
-
-            switch (button.Name)
-            {
-                case "LeftArrowButton":
-                    OnLeftButtonClick ( EventArgs.Empty );
-                    break;
-                case "RightArrowButton":
-                    OnRightButtonClick ( EventArgs.Empty );
-                    break;
-            }
         }
     }
 }
