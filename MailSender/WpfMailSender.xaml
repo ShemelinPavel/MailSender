@@ -11,7 +11,7 @@
         xmlns:user_components="clr-namespace:WpfMailSender.Components"
         xmlns:interact="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="16"
+        Height="650" Width="900" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="16"
         DataContext="{Binding WpfMainWindowModel, Source={StaticResource Locator}}"
         Title="{Binding mvvmTitle}"
         Name="WpfMainWindow"
@@ -63,9 +63,7 @@
                                                         <Setter Property="Opacity" Value="0.6"/>
                                                     </Style>
                                                 </DockPanel.Resources>
-                                                <TextBlock Text="(" Margin="3, 0"/>
-                                                <TextBlock Text="{Binding Email}"/>
-                                                <TextBlock Text=")"/>
+                                                <TextBlock> (<TextBlock Text="{Binding Email}"/>)</TextBlock>
                                             </DockPanel>
                                         </DockPanel>
                                     </DataTemplate>
@@ -104,9 +102,7 @@
                                                         <Setter Property="Opacity" Value="0.6"/>
                                                     </Style>
                                                 </DockPanel.Resources>
-                                                <TextBlock Text="(порт:" Margin="3, 0"/>
-                                                <TextBlock Text="{Binding Port}"/>
-                                                <TextBlock Text=")"/>
+                                                <TextBlock> (порт: <TextBlock Text="{Binding Port}"/>)</TextBlock>
                                             </DockPanel>
                                         </DockPanel>
                                     </DataTemplate>

@@ -20,6 +20,7 @@ namespace WpfMailSender.lib.Data.LinqToSQL
 	using System.Linq.Expressions;
 	using System.ComponentModel;
 	using System;
+    using WpfMailSender.lib.Entities.Base;
 	
 	
 	public partial class MailSenderDB : System.Data.Linq.DataContext
@@ -74,7 +75,7 @@ namespace WpfMailSender.lib.Data.LinqToSQL
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Recipients")]
-	public partial class Recipient : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Recipient : BaseEntity, INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);

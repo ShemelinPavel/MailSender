@@ -13,67 +13,69 @@ namespace WpfMailSender.lib
     /// </summary>
     static class EmailSendServiceClass
     {
-        /// <summary>
-        /// выполенние рассылки почтовых сообщений
-        /// </summary>
-        /// <param name="mails">массив почтовых сообщений</param>
-        /// <param name="mailServ">почтовый сервер</param>
-        /// <param name="errMessage">сообщение об ошибке</param>
-        /// <returns>задача выполнена да/нет</returns>
-        static public bool SendEmails(Email[] mails, MailServer mailServ, out string errMessage)
-        {
+        //пока отключено
+        
+        ///// <summary>
+        ///// выполенние рассылки почтовых сообщений
+        ///// </summary>
+        ///// <param name="mails">массив почтовых сообщений</param>
+        ///// <param name="mailServ">почтовый сервер</param>
+        ///// <param name="errMessage">сообщение об ошибке</param>
+        ///// <returns>задача выполнена да/нет</returns>
+        //static public bool SendEmails(Email[] mails, Server mailServ, out string errMessage)
+        //{
 
-            foreach (Email email in mails)
-            {
-                if (!(SendEmail ( email, mailServ, out string errMes )))
-                {
-                    errMessage = errMes;
-                    return false;
-                }
-            }
+        //    foreach (Email email in mails)
+        //    {
+        //        if (!(SendEmail ( email, mailServ, out string errMes )))
+        //        {
+        //            errMessage = errMes;
+        //            return false;
+        //        }
+        //    }
 
-            errMessage = "";
+        //    errMessage = "";
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        /// <summary>
-        /// посылка почтового сообщения
-        /// </summary>
-        /// <param name="email">почтовое сообщение</param>
-        /// <param name="mailServ">почтовый сервер</param>
-        /// <param name="errorMessage">сообщение об ошибке</param>
-        /// <returns>задача выполнена да/нет</returns>
-        static bool SendEmail(Email email, MailServer mailServ, out string errorMessage)
-        {
-            errorMessage = "";
+        ///// <summary>
+        ///// посылка почтового сообщения
+        ///// </summary>
+        ///// <param name="email">почтовое сообщение</param>
+        ///// <param name="mailServ">почтовый сервер</param>
+        ///// <param name="errorMessage">сообщение об ошибке</param>
+        ///// <returns>задача выполнена да/нет</returns>
+        //static bool SendEmail(Email email, Server mailServ, out string errorMessage)
+        //{
+        //    errorMessage = "";
 
-            using (MailMessage mMes = new MailMessage ( mailServ.User, email.To ))
-            {
+        //    using (MailMessage mMes = new MailMessage ( mailServ.User, email.To ))
+        //    {
 
-                mMes.Subject = email.Subject;
-                mMes.Body = email.Content;
-                mMes.IsBodyHtml = false;
+        //        mMes.Subject = email.Subject;
+        //        mMes.Body = email.Content;
+        //        mMes.IsBodyHtml = false;
 
-                using (SmtpClient sCl = new SmtpClient ( mailServ.Host, mailServ.Port ))
-                {
-                    sCl.EnableSsl = true;
-                    sCl.UseDefaultCredentials = false;
-                    sCl.Credentials = new NetworkCredential ( mailServ.User, mailServ.UserPassword );
+        //        using (SmtpClient sCl = new SmtpClient ( mailServ.Host, mailServ.Port ))
+        //        {
+        //            sCl.EnableSsl = true;
+        //            sCl.UseDefaultCredentials = false;
+        //            sCl.Credentials = new NetworkCredential ( mailServ.User, mailServ.UserPassword );
 
-                    try
-                    {
-                        sCl.Send ( mMes );
-                    }
-                    catch(Exception e)
-                    {
-                        errorMessage = e.Message;
-                        return false;
-                    }
-                }
+        //            try
+        //            {
+        //                sCl.Send ( mMes );
+        //            }
+        //            catch(Exception e)
+        //            {
+        //                errorMessage = e.Message;
+        //                return false;
+        //            }
+        //        }
 
-            }
-            return true;
-        }
+        //    }
+        //    return true;
+        //}
     }
 }

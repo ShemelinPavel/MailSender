@@ -22,7 +22,7 @@ namespace WpfMailSender.lib.Services
             return dbcontext.Recipient.ToArray ();
         }
 
-        public int Create(Recipient recipient)
+        public int Add(Recipient recipient)
         {
             if (recipient.Id != 0) return recipient.Id;
             dbcontext.Recipient.InsertOnSubmit ( recipient );
@@ -30,7 +30,7 @@ namespace WpfMailSender.lib.Services
             return recipient.Id;
         }
 
-        public void Write ( Recipient recipient )
+        public void Edit ( Recipient recipient )
         {
             if (dbcontext.Recipient.Contains ( recipient )) return;
 
@@ -38,5 +38,14 @@ namespace WpfMailSender.lib.Services
         }
 
         public void Save () => dbcontext.SubmitChanges ();
+
+        public Recipient GetById ( int id ) => dbcontext.Recipient.FirstOrDefault ( i => i.Id == id );
+
+        public void Remove ( int id )
+        {
+            Recipient tmprecipient = GetById ( id );
+            if (!(tmprecipient is null)) dbcontext.Recipient.DeleteOnSubmit ( tmprecipient );
+            Save ();
+        }
     }
 }

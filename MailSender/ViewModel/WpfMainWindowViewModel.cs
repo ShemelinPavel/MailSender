@@ -11,6 +11,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace WpfMailSender.ViewModel
 {
@@ -19,8 +21,25 @@ namespace WpfMailSender.ViewModel
         private string _title = "Рассылка писем wpf+mvvm";
         private readonly IRecipientsData recipData;
         private ObservableCollection<Recipient> recipCol;
-        private Recipient selrecipient;
-        private TabControl maintabcontrol;
+        private Recipient selRecipient;
+        private TabControl mainTabControl;
+        private string recipDescrFilterText;
+        private CollectionViewSource filtredRecipViewSource;
+
+        public ICollectionView mvvmFiltredRecipients
+        {
+            get => filtredRecipViewSource?.View;
+        }
+
+        public string mvvmRecipientDescrFilterText
+        {
+            get => recipDescrFilterText;
+            set
+            {
+                if(!Set ( ref recipDescrFilterText, value )) return;
+                mvvmFiltredRecipients?.Refresh ();
+            }
+        }
 
         public string mvvmTitle
         {
@@ -30,21 +49,38 @@ namespace WpfMailSender.ViewModel
 
         public TabControl mvvmMainTabControl
         {
-            get => maintabcontrol;
-            set => Set ( ref maintabcontrol, value );
+            get => mainTabControl;
+            set => Set ( ref mainTabControl, value );
         }
 
 
         public ObservableCollection<Recipient> mvvmRecipients
         {
             get => recipCol;
-            private set => Set ( ref recipCol, value );
+            set
+            {
+                if (!Set ( ref recipCol, value )) return;
+                if(filtredRecipViewSource != null) filtredRecipViewSource.Filter -= OnFiltredRecipViewSource_Filter;
+                filtredRecipViewSource = new CollectionViewSource { Source = value };
+                filtredRecipViewSource.Filter += OnFiltredRecipViewSource_Filter;
+                RaisePropertyChanged ( nameof ( mvvmFiltredRecipients ) );
+            }
+        }
+
+        private void OnFiltredRecipViewSource_Filter ( object sender, FilterEventArgs e )
+        {
+            if (!(e.Item is Recipient recipient)) return;
+
+            if (string.IsNullOrWhiteSpace(recipDescrFilterText) || recipient.Description.IndexOf(recipDescrFilterText, StringComparison.OrdinalIgnoreCase) >=0)
+            {
+                e.Accepted = true;
+            }
         }
 
         public Recipient mvvmSelectedRecipient
         {
-            get => selrecipient;
-            set => Set ( ref selrecipient, value );
+            get => selRecipient;
+            set => Set ( ref selRecipient, value );
         }
 
         public WpfMainWindowViewModel ( IRecipientsData recipientsData )
@@ -77,7 +113,7 @@ namespace WpfMailSender.ViewModel
 
         #endregion
 
-        private bool CanWpfMainWindowLoadedExecute (Window window) => true;
+        private bool CanWpfMainWindowLoadedExecute ( Window window ) => true;
         private void OnWpfMainWindowLoadedExecute ( Window window )
         {
 
@@ -137,7 +173,7 @@ namespace WpfMailSender.ViewModel
 
         private void OnWriteRecipientDataCommandExecute ( Recipient recipient )
         {
-            recipData.Write ( recipient );
+            recipData.Edit ( recipient );
             recipData.Save ();
         }
 
@@ -146,7 +182,7 @@ namespace WpfMailSender.ViewModel
         private void OnCreateRecipientDataCommandExecute ()
         {
             var newrecip = new Recipient { Description = "New recipient", Email = "test@mail.ru" };
-            int newid = recipData.Create ( newrecip );
+            int newid = recipData.Add ( newrecip );
             if (newid != 0)
             {
                 recipCol.Add ( newrecip );

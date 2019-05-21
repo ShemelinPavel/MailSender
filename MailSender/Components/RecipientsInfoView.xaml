@@ -13,7 +13,7 @@
         <TextBlock Text="Получатели сообщений" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,8,0,3"/>
         <DockPanel DockPanel.Dock="Top" Margin="0,3,0,3">
             <TextBlock Text="Поиск:"/>
-            <TextBox Margin="5,0"/>
+            <TextBox Margin="5,0" Text="{Binding mvvmRecipientNameFilterText, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
         <Button DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="10,5,10,5" Padding="3" Command="{Binding mvvmRefreshDataCommand}">
             <StackPanel Orientation="Horizontal">
@@ -22,7 +22,7 @@
             </StackPanel>
         </Button>
         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightBlue"
-                                ItemsSource="{Binding mvvmRecipients}"  SelectedItem="{Binding mvvmSelectedRecipient}">
+                                ItemsSource="{Binding mvvmFiltredRecipients}"  SelectedItem="{Binding mvvmSelectedRecipient}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" MinWidth="50" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Имя" MinWidth="160" Binding="{Binding Description}"/>
