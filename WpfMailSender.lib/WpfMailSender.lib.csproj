@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\LinqToSQL\MailSenderDB.cs">
+      <DependentUpon>MailSenderDB.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Data\LinqToSQL\MailSenderDB.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -76,6 +79,7 @@
     <Compile Include="Services\Interfaces\ISendersData.cs" />
     <Compile Include="Services\Interfaces\IRecipientsData.cs" />
     <Compile Include="Services\Interfaces\IServersData.cs" />
+    <Compile Include="Services\LinqToSQL\Recipient.cs" />
     <Compile Include="Services\LinqToSQL\RecipientsDataLinqToSQL.cs" />
   </ItemGroup>
   <ItemGroup>

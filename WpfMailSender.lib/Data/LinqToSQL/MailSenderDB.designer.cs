@@ -80,8 +80,6 @@ namespace WpfMailSender.lib.Data.LinqToSQL
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _Id;
-		
 		private string _Description;
 		
 		private string _Email;
@@ -104,19 +102,19 @@ namespace WpfMailSender.lib.Data.LinqToSQL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		public new int Id
 		{
 			get
 			{
-				return this._Id;
+				return base.Id;
 			}
 			set
 			{
-				if ((this._Id != value))
+				if ((base.Id != value))
 				{
 					this.OnIdChanging(value);
 					this.SendPropertyChanging();
-					this._Id = value;
+                    base.Id = value;
 					this.SendPropertyChanged("Id");
 					this.OnIdChanged();
 				}

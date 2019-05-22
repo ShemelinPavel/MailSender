@@ -11,7 +11,7 @@ namespace WpfMailSender.lib.Services.InMemory
 {
     public abstract class DataInMemory<T> : IDataService<T> where T : BaseEntity
     {
-        private readonly List<T> items = new List<T> ();
+        protected readonly List<T> items = new List<T> ();
 
         public int Add ( T item )
         {
@@ -26,7 +26,11 @@ namespace WpfMailSender.lib.Services.InMemory
 
         public IEnumerable<T> GetAll () => items;
 
-        public T GetById ( int id ) => items.FirstOrDefault ( i => i.Id == id );
+        public T GetById ( int id )
+        {
+            if (id < 0) throw new ArgumentOutOfRangeException ( nameof ( id ), id, "Значение id должно быть больше 0" );
+            return items.FirstOrDefault ( i => i.Id == id );
+        }
 
         public void Remove ( int id )
         {
