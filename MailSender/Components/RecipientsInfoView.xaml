@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="WpfMailSender.Components.RecipientsInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:l="clr-namespace:WpfMailSender.ViewModel"
+             xmlns:local="clr-namespace:WpfMailSender"
+             mc:Ignorable="d"
+             DataContext="{Binding WpfMainWindowModel, Source={StaticResource Locator}}"
+             d:DesignHeight="380" d:DesignWidth="340">
+    <DockPanel>
+        <TextBlock Text="Получатели сообщений" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,8,0,3"/>
+        <DockPanel DockPanel.Dock="Top" Margin="0,3,0,3">
+            <TextBlock Text="Поиск:"/>
+            <TextBox Margin="5,0" Text="{Binding mvvmRecipientNameFilterText, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+        <Button DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="10,5,10,5" Padding="3" Command="{Binding mvvmRefreshDataCommand}">
+            <StackPanel Orientation="Horizontal">
+                <fa:ImageAwesome Height="16" Icon="Refresh"/>
+                <TextBlock Text="Обновить" Margin="3,0"/>
+            </StackPanel>
+        </Button>
+        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" HorizontalGridLinesBrush="Transparent" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightBlue"
+                                ItemsSource="{Binding mvvmFiltredRecipients}"  SelectedItem="{Binding mvvmSelectedRecipient}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" MinWidth="50" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Имя" MinWidth="160" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
