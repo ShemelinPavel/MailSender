@@ -18,6 +18,7 @@ using GalaSoft.MvvmLight.Ioc;
 using WpfMailSender.lib.Data.LinqToSQL;
 using WpfMailSender.lib.Services;
 using WpfMailSender.lib.Services.Interfaces;
+using WpfMailSender.lib.Services.LinqToSQL;
 //using Microsoft.Practices.ServiceLocation;
 
 namespace WpfMailSender.ViewModel

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WpfMailSender.lib.Data.LinqToSQL;
+using WpfMailSender.lib.Entities;
 using WpfMailSender.lib.Services.InMemory;
 using System.Linq;
 
@@ -67,10 +67,10 @@ namespace WpfMailSender.lib.Tests.Services.InMemory
 
             //Arenge
 
-            const string exp_Descr = "unit test recip";
+            const string exp_Name = "unit test recip";
             const string exp_Email = "unit_test_recip@unit_test_recip.com";
 
-            Recipient new_Recip = new Recipient { Description = exp_Descr, Email = exp_Email };
+            Recipient new_Recip = new Recipient { Name = exp_Name, Email = exp_Email };
 
             RecipientsDataInMemory serv = new RecipientsDataInMemory ();
 
@@ -90,10 +90,10 @@ namespace WpfMailSender.lib.Tests.Services.InMemory
 
             //Arenge
 
-            const string exp_Descr = "unit test recip";
+            const string exp_Name = "unit test recip";
             const string exp_Email = "unit_test_recip@unit_test_recip.com";
 
-            Recipient new_Recip = new Recipient { Description = exp_Descr, Email = exp_Email };
+            Recipient new_Recip = new Recipient { Name = exp_Name, Email = exp_Email };
 
             RecipientsDataInMemory serv = new RecipientsDataInMemory ();
 

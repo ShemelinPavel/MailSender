@@ -25,7 +25,7 @@
                                 ItemsSource="{Binding mvvmFiltredRecipients}"  SelectedItem="{Binding mvvmSelectedRecipient}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" MinWidth="50" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="Имя" MinWidth="160" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="Имя" MinWidth="160" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email}"/>
             </DataGrid.Columns>
         </DataGrid>

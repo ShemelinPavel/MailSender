@@ -46,7 +46,7 @@
         <TextBlock Text="Наименование:" Grid.Column="0" Grid.Row="1"/>
         <TextBlock Text="Email:" Grid.Column="0" Grid.Row="2"/>
         <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding mvvmSelectedRecipient.Id, NotifyOnValidationError=True}"/>
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding mvvmSelectedRecipient.Description, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding mvvmSelectedRecipient.Name, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"/>
         <TextBox Grid.Column="1" Grid.Row="2">
             <TextBox.Text>
                 <Binding Path="mvvmSelectedRecipient.Email" NotifyOnValidationError="True">

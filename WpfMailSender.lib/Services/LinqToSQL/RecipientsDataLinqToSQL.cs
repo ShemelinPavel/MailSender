@@ -3,48 +3,76 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfMailSender.lib.Data.LinqToSQL;
+using WpfMailSender.lib.Entities;
 using WpfMailSender.lib.Services.Interfaces;
 
-namespace WpfMailSender.lib.Services
+namespace WpfMailSender.lib.Services.LinqToSQL
 {
     public class RecipientsDataLinqToSQL : IRecipientsData
     {
-        private readonly MailSenderDB dbcontext;
+        private readonly Data.LinqToSQL.MailSenderDB dbcontext;
 
-        public RecipientsDataLinqToSQL (MailSenderDB databaseContext)
+        public RecipientsDataLinqToSQL ( Data.LinqToSQL.MailSenderDB databaseContext )
         {
             dbcontext = databaseContext;
         }
 
         public IEnumerable<Recipient> GetAll ()
         {
-            return dbcontext.Recipient.ToArray ();
+            return dbcontext.Recipient.Select ( r => new Recipient { Id = r.Id, Name = r.Description, Email = r.Email } );
         }
 
-        public int Add(Recipient recipient)
+        public int Add ( Recipient recipient )
         {
-            if (recipient.Id != 0) return recipient.Id;
-            dbcontext.Recipient.InsertOnSubmit ( recipient );
+            if (dbcontext.Recipient.Any ( r => r.Id == recipient.Id )) return recipient.Id;
+            dbcontext.Recipient.InsertOnSubmit ( new Data.LinqToSQL.Recipient
+            {
+                Id = recipient.Id,
+                Description = recipient.Name,
+                Email = recipient.Email
+            }
+            );
+
             Save ();
             return recipient.Id;
         }
 
         public void Edit ( Recipient recipient )
         {
-            if (dbcontext.Recipient.Contains ( recipient )) return;
+            Data.LinqToSQL.Recipient db_recip = dbcontext.Recipient.FirstOrDefault ( r => r.Id == recipient.Id );
+            if(db_recip is null)
+            {
+                Add ( recipient );
+                return;
+            }
 
-            dbcontext.Recipient.InsertOnSubmit ( recipient );
+            db_recip.Id = recipient.Id;
+            db_recip.Description = recipient.Name;
+            db_recip.Email = recipient.Email;
+
+            Save ();
         }
 
         public void Save () => dbcontext.SubmitChanges ();
 
-        public Recipient GetById ( int id ) => dbcontext.Recipient.FirstOrDefault ( i => i.Id == id );
+        public Recipient GetById ( int id )
+        {
+            Data.LinqToSQL.Recipient db_recip = dbcontext.Recipient.FirstOrDefault ( i => i.Id == id );
+
+            return new Recipient
+            {
+                Id = db_recip.Id,
+                Name = db_recip.Description,
+                Email = db_recip.Email
+            };
+        }
 
         public void Remove ( int id )
         {
-            Recipient tmprecipient = GetById ( id );
-            if (!(tmprecipient is null)) dbcontext.Recipient.DeleteOnSubmit ( tmprecipient );
+            Data.LinqToSQL.Recipient db_recip = dbcontext.Recipient.FirstOrDefault ( r => r.Id == id );
+            if (db_recip is null) return;
+
+            dbcontext.Recipient.DeleteOnSubmit ( db_recip );
             Save ();
         }
     }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WpfMailSender.lib.Entities.Base
 {
-    public abstract class Human : NamedEntity
+    public class NamedEntity: BaseEntity
     {
-        public string Email { get; set; }
+        public string Name { get; set; }
     }
 }

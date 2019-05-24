@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfMailSender.lib;
-using WpfMailSender.lib.Data.LinqToSQL;
+using WpfMailSender.lib.Entities;
 using WpfMailSender.lib.Services.Interfaces;
 
 namespace WpfMailSender.lib.Services.InMemory
@@ -13,7 +13,7 @@ namespace WpfMailSender.lib.Services.InMemory
     {
         public RecipientsDataInMemory()
         {
-            items.AddRange ( EmailSenderSettings.MailSenders.Select ((s, i) => new Recipient { Id = i + 1, Description = s.Name, Email = s.Email } ) );
+            items.AddRange ( EmailSenderSettings.MailSenders.Select ((s, i) => new Recipient { Id = i + 1, Name = s.Name, Email = s.Email } ) );
         }
 
         public override void Edit ( Recipient item )
@@ -21,7 +21,7 @@ namespace WpfMailSender.lib.Services.InMemory
             Recipient recipient = GetById ( item.Id );
             if (recipient is null || ReferenceEquals ( recipient, item )) return;
 
-            recipient.Description = item.Description;
+            recipient.Name = item.Name;
             recipient.Email = item.Email;
         }
     }

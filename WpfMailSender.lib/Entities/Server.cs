@@ -10,12 +10,8 @@ namespace WpfMailSender.lib.Entities
     /// <summary>
     /// настройки почтового сервера
     /// </summary>
-    public class Server: BaseEntity
+    public class Server: NamedEntity
     {
-        /// <summary>
-        /// представление почтового сервера
-        /// </summary>
-        string srvDescr;
 
         /// <summary>
         /// хост почтового сервера
@@ -41,21 +37,6 @@ namespace WpfMailSender.lib.Entities
         /// использовать SSL
         /// </summary>
         bool srvUseSSL;
-
-        /// <summary>
-        /// представление почтового сервера
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                return this.srvDescr;
-            }
-            set
-            {
-                this.srvDescr = value;
-            }
-        }
 
         /// <summary>
         /// почтовый сервер
@@ -168,7 +149,7 @@ namespace WpfMailSender.lib.Entities
         /// <param name="useSSL">использование SSL</param>
         public Server ( string descr, string host, int port, string user, string userPass, bool useSSL = false )
         {
-            this.Description = descr;
+            base.Name = descr;
             this.Host = host;
             this.Port = port;
             this.User = user;

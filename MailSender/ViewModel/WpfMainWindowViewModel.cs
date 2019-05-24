@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using WpfMailSender.lib.Data.LinqToSQL;
+using WpfMailSender.lib.Entities;
 using WpfMailSender.lib.Services.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Data;
 using System.ComponentModel;
 
@@ -23,7 +23,7 @@ namespace WpfMailSender.ViewModel
         private ObservableCollection<Recipient> recipCol;
         private Recipient selRecipient;
         private TabControl mainTabControl;
-        private string recipDescrFilterText;
+        private string recipNameFilterText;
         private CollectionViewSource filtredRecipViewSource;
 
         public ICollectionView mvvmFiltredRecipients
@@ -31,12 +31,12 @@ namespace WpfMailSender.ViewModel
             get => filtredRecipViewSource?.View;
         }
 
-        public string mvvmRecipientDescrFilterText
+        public string mvvmRecipientNameFilterText
         {
-            get => recipDescrFilterText;
+            get => recipNameFilterText;
             set
             {
-                if(!Set ( ref recipDescrFilterText, value )) return;
+                if(!Set ( ref recipNameFilterText, value )) return;
                 mvvmFiltredRecipients?.Refresh ();
             }
         }
@@ -71,7 +71,7 @@ namespace WpfMailSender.ViewModel
         {
             if (!(e.Item is Recipient recipient)) return;
 
-            if (string.IsNullOrWhiteSpace(recipDescrFilterText) || recipient.Description.IndexOf(recipDescrFilterText, StringComparison.OrdinalIgnoreCase) >=0)
+            if (string.IsNullOrWhiteSpace(recipNameFilterText) || recipient.Name.IndexOf(recipNameFilterText, StringComparison.OrdinalIgnoreCase) >=0)
             {
                 e.Accepted = true;
             }
@@ -181,7 +181,7 @@ namespace WpfMailSender.ViewModel
 
         private void OnCreateRecipientDataCommandExecute ()
         {
-            var newrecip = new Recipient { Description = "New recipient", Email = "test@mail.ru" };
+            var newrecip = new Recipient { Name = "New recipient", Email = "test@mail.ru" };
             int newid = recipData.Add ( newrecip );
             if (newid != 0)
             {

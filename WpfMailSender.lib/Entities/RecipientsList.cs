@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfMailSender.lib.Entities.Base;
-using WpfMailSender.lib.Data.LinqToSQL;
+using WpfMailSender.lib.Entities;
 
 namespace WpfMailSender.lib.Entities
 {
-    public class RecipientsList: BaseEntity
+    public class RecipientsList: NamedEntity
     {
-        public string Description { get; set; }
-
         public IEnumerable<Recipient> Recipients { get; set; }
     }
 }

@@ -20,7 +20,6 @@ namespace WpfMailSender.lib.Data.LinqToSQL
 	using System.Linq.Expressions;
 	using System.ComponentModel;
 	using System;
-    using WpfMailSender.lib.Entities.Base;
 	
 	
 	public partial class MailSenderDB : System.Data.Linq.DataContext
@@ -75,10 +74,12 @@ namespace WpfMailSender.lib.Data.LinqToSQL
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Recipients")]
-	public partial class Recipient : BaseEntity, INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Recipient : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
 		
 		private string _Description;
 		
@@ -102,19 +103,19 @@ namespace WpfMailSender.lib.Data.LinqToSQL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public new int Id
+		public int Id
 		{
 			get
 			{
-				return base.Id;
+				return this._Id;
 			}
 			set
 			{
-				if ((base.Id != value))
+				if ((this._Id != value))
 				{
 					this.OnIdChanging(value);
 					this.SendPropertyChanging();
-                    base.Id = value;
+					this._Id = value;
 					this.SendPropertyChanged("Id");
 					this.OnIdChanged();
 				}
