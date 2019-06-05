@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,37 +13,17 @@ namespace WpfMailSender.lib.Entities
     /// </summary>
     public class EmailMessage: BaseEntity
     {
-        /// <summary>
-        /// тема
-        /// </summary>
-        string subj;
-
-        /// <summary>
-        /// содержание письма
-        /// </summary>
-        string content;
 
         /// <summary>
         /// тема
         /// </summary>
-        public string Subject
-        {
-            get
-            { return this.subj; }
-            set
-            { this.subj = value; }
-        }
+        [Required, MaxLength(256)]
+        public string Subject { get; set; }
 
         /// <summary>
         /// содержание письма
         /// </summary>
-        public string Body
-        {
-            get
-            { return this.content; }
-            set
-            { this.content = value; }
-        }
+        public string Body { get; set; }
 
         /// <summary>
         /// конструктор почтового сообщения

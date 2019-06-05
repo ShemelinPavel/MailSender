@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfMailSender.lib.Entities.Base;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WpfMailSender.lib.Entities
 {
@@ -41,6 +43,7 @@ namespace WpfMailSender.lib.Entities
         /// <summary>
         /// почтовый сервер
         /// </summary>
+        [Required]
         public string Host
         {
             get
@@ -63,6 +66,7 @@ namespace WpfMailSender.lib.Entities
         /// <summary>
         /// порт почт. сервера
         /// </summary>
+        [DefaultValue(25)]
         public int Port
         {
             get
@@ -85,6 +89,7 @@ namespace WpfMailSender.lib.Entities
         /// <summary>
         /// почтовый аккаунт (адрес) с которого идет рассылка
         /// </summary>
+        [Required]
         public string User
         {
             get
@@ -126,6 +131,7 @@ namespace WpfMailSender.lib.Entities
         /// <summary>
         /// использовать SSL
         /// </summary>
+        [DefaultValue(false)]
         public bool UseSSL
         {
             get

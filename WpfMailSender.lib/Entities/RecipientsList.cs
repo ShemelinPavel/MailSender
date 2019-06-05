@@ -10,6 +10,6 @@ namespace WpfMailSender.lib.Entities
 {
     public class RecipientsList: NamedEntity
     {
-        public IEnumerable<Recipient> Recipients { get; set; }
+        public virtual IEnumerable<Recipient> Recipients { get; set; }
     }
 }

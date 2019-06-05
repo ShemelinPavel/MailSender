@@ -20,6 +20,12 @@ namespace WpfMailSender.ViewModel
     {
         private string _title = "Рассылка писем wpf+mvvm";
         private readonly IRecipientsData recipData;
+        private readonly IRecipientsListData recipientsListData;
+        private readonly ISendersData sendersData;
+        private readonly IEmailMessageData emailMessageData;
+        private readonly IMailsListData mailsListData;
+        private readonly IServersData serversData;
+        private readonly ISchedulerTaskData schedulerTaskData;
         private ObservableCollection<Recipient> recipCol;
         private Recipient selRecipient;
         private TabControl mainTabControl;
@@ -59,13 +65,20 @@ namespace WpfMailSender.ViewModel
             get => recipCol;
             set
             {
-                if (!Set ( ref recipCol, value )) return;
-                if(filtredRecipViewSource != null) filtredRecipViewSource.Filter -= OnFiltredRecipViewSource_Filter;
+                if (!Set(ref recipCol, value)) return;
+                if (filtredRecipViewSource != null) filtredRecipViewSource.Filter -= OnFiltredRecipViewSource_Filter;
                 filtredRecipViewSource = new CollectionViewSource { Source = value };
                 filtredRecipViewSource.Filter += OnFiltredRecipViewSource_Filter;
-                RaisePropertyChanged ( nameof ( mvvmFiltredRecipients ) );
+                RaisePropertyChanged(nameof(mvvmFiltredRecipients));
             }
         }
+
+        public ObservableCollection<RecipientsList> mvvmRecipientsLists { get; } = new ObservableCollection<RecipientsList>();
+        public ObservableCollection<Sender> mvvmSenders { get; } = new ObservableCollection<Sender>();
+        public ObservableCollection<EmailMessage> mvvmEmailMessages { get; } = new ObservableCollection<EmailMessage>();
+        public ObservableCollection<MailsList> mvvmMailsLists { get; } = new ObservableCollection<MailsList>();
+        public ObservableCollection<Server> mvvmServers { get; } = new ObservableCollection<Server>();
+        public ObservableCollection<SchedulerTask> mvvmSchedulerTasks { get; } = new ObservableCollection<SchedulerTask>();
 
         private void OnFiltredRecipViewSource_Filter ( object sender, FilterEventArgs e )
         {
@@ -83,10 +96,23 @@ namespace WpfMailSender.ViewModel
             set => Set ( ref selRecipient, value );
         }
 
-        public WpfMainWindowViewModel ( IRecipientsData recipientsData )
+        public WpfMainWindowViewModel (
+            IRecipientsData recipientsData, 
+            IRecipientsListData recipientsListData, 
+            ISendersData sendersData,
+            IEmailMessageData emailMessageData,
+            IMailsListData mailsListData,
+            IServersData serversData,
+            ISchedulerTaskData schedulerTaskData
+            )
         {
             recipData = recipientsData;
-
+            this.recipientsListData = recipientsListData;
+            this.sendersData = sendersData;
+            this.emailMessageData = emailMessageData;
+            this.mailsListData = mailsListData;
+            this.serversData = serversData;
+            this.schedulerTaskData = schedulerTaskData;
             mvvmWpfMainWindowLoaded = new RelayCommand<Window> ( OnWpfMainWindowLoadedExecute, CanWpfMainWindowLoadedExecute );
             mvvmWriteRecipientDataCommand = new RelayCommand<Recipient> ( OnWriteRecipientDataCommandExecute, CanWriteRecipientDataCommandExecute );
             mvvmCreateRecipientDataCommand = new RelayCommand ( OnCreateRecipientDataCommandExecute, CanCreateRecipientDataCommandExecute );
@@ -95,11 +121,6 @@ namespace WpfMailSender.ViewModel
 
             mvvvmClickLeftArrowTabItemsControlCommand = new RelayCommand ( OnClickLeftArrowTabItemsControlCommandExecute, CanClickLeftArrowTabItemsControlCommandExecute );
             mvvvmClickRightArrowTabItemsControlCommand = new RelayCommand ( OnClickRightArrowTabItemsControlCommandExecute, CanClickRightArrowTabItemsControlCommandExecute );
-        }
-
-        private void LoadData ()
-        {
-            mvvmRecipients = new ObservableCollection<Recipient> ( recipData.GetAll () );
         }
 
         #region Commands
@@ -116,9 +137,37 @@ namespace WpfMailSender.ViewModel
         private bool CanWpfMainWindowLoadedExecute ( Window window ) => true;
         private void OnWpfMainWindowLoadedExecute ( Window window )
         {
-
-            mvvmMainTabControl = ((WpfMailSender.MainWindow)window).MainTabControl;
+            Init(window);
             LoadData ();
+        }
+
+        private void Init(Window window)
+        {
+            mvvmMainTabControl = ((WpfMailSender.MainWindow)window).MainTabControl;
+            mvvmRecipients = new ObservableCollection<Recipient>();
+        }
+
+        private void LoadData()
+        {
+            void LoadD<T>(ObservableCollection<T> collection, IDataService<T> service)
+            {
+                collection.Clear();
+
+                var serviceContent = service.GetAll();
+
+                foreach (var item in serviceContent)
+                {
+                    collection.Add(item);
+                }
+            }
+
+            LoadD(mvvmRecipients, recipData);
+            LoadD(mvvmRecipientsLists, recipientsListData);
+            LoadD(mvvmSenders, sendersData);
+            LoadD(mvvmServers, serversData);
+            LoadD(mvvmEmailMessages, emailMessageData);
+            LoadD(mvvmMailsLists, mailsListData);
+            LoadD(mvvmSchedulerTasks, schedulerTaskData);
         }
 
         private bool CanCloseWpfMainWindowCommandExecute ( Window window ) => true;

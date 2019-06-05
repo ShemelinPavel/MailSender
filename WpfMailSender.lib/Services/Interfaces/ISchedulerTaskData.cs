@@ -7,7 +7,7 @@ using WpfMailSender.lib.Entities;
 
 namespace WpfMailSender.lib.Services.Interfaces
 {
-    interface ISchedulerTaskData: IDataService<SchedulerTask>
+    public interface ISchedulerTaskData : IDataService<SchedulerTask>
     {
     }
 }

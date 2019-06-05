@@ -7,8 +7,8 @@ using WpfMailSender.lib.Entities.Base;
 
 namespace WpfMailSender.lib.Entities
 {
-    class MailsList: NamedEntity
+    public class MailsList : NamedEntity
     {
-        public IEnumerable<EmailMessage> Messages { get; set; }
+        public virtual IEnumerable<EmailMessage> Messages { get; set; }
     }
 }

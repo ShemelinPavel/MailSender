@@ -7,7 +7,7 @@ using WpfMailSender.lib.Entities;
 
 namespace WpfMailSender.lib.Services.Interfaces
 {
-    interface IRecipientsListData: IDataService<RecipientsList>
+    public interface IRecipientsListData : IDataService<RecipientsList>
     {
     }
 }

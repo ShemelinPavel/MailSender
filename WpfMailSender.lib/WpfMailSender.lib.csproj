@@ -31,7 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
@@ -42,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\EF\WpfMailSenderDBContext.cs" />
     <Compile Include="Data\LinqToSQL\MailSenderDB.cs">
       <DependentUpon>MailSenderDB.dbml</DependentUpon>
     </Compile>
@@ -54,7 +62,6 @@
     <Compile Include="DBClass.cs" />
     <Compile Include="EmailSenderCommonObjects.cs" />
     <Compile Include="EmailSenderSettings.cs" />
-    <Compile Include="EmailSendServiceClass.cs" />
     <Compile Include="Entities\Base\BaseEntity.cs" />
     <Compile Include="Entities\Base\Human.cs" />
     <Compile Include="Entities\Base\NamedEntity.cs" />
@@ -65,17 +72,25 @@
     <Compile Include="Entities\Server.cs" />
     <Compile Include="Entities\Sender.cs" />
     <Compile Include="Entities\EmailMessage.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SchedulerClass.cs" />
     <Compile Include="Services\InMemory\DataInMemory.cs" />
+    <Compile Include="Services\InMemory\EmailMessagesDataInMemory.cs" />
+    <Compile Include="Services\InMemory\MailsListDataInMemory.cs" />
     <Compile Include="Services\InMemory\RecipientsDataInMemory.cs" />
+    <Compile Include="Services\InMemory\RecipientsListDataInMemory.cs" />
+    <Compile Include="Services\InMemory\SchedulerTasksDataInMemory.cs" />
+    <Compile Include="Services\InMemory\SendersDataInMemory.cs" />
+    <Compile Include="Services\InMemory\ServersDataInMemory.cs" />
     <Compile Include="Services\Interfaces\IDataService.cs" />
     <Compile Include="Services\Interfaces\IEmailMessageData.cs" />
+    <Compile Include="Services\Interfaces\IEmailSender.cs" />
+    <Compile Include="Services\Interfaces\IEmailSenderService.cs" />
     <Compile Include="Services\Interfaces\IMailsListData.cs" />
     <Compile Include="Services\Interfaces\IRecipientsListData.cs" />
     <Compile Include="Services\Interfaces\ISchedulerTaskData.cs" />
@@ -83,6 +98,7 @@
     <Compile Include="Services\Interfaces\IRecipientsData.cs" />
     <Compile Include="Services\Interfaces\IServersData.cs" />
     <Compile Include="Services\LinqToSQL\RecipientsDataLinqToSQL.cs" />
+    <Compile Include="Services\SmtpEmailSenderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -94,6 +110,7 @@
     <None Include="Data\LinqToSQL\MailSenderDB.dbml.layout">
       <DependentUpon>MailSenderDB.dbml</DependentUpon>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -16,9 +16,8 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using WpfMailSender.lib.Data.LinqToSQL;
-using WpfMailSender.lib.Services;
+using WpfMailSender.lib.Services.InMemory;
 using WpfMailSender.lib.Services.Interfaces;
-using WpfMailSender.lib.Services.LinqToSQL;
 //using Microsoft.Practices.ServiceLocation;
 
 namespace WpfMailSender.ViewModel
@@ -46,11 +45,18 @@ namespace WpfMailSender.ViewModel
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
-            if (!SimpleIoc.Default.IsRegistered<MailSenderDB> ()) SimpleIoc.Default.Register ( () => new MailSenderDB () );
-            SimpleIoc.Default.Register<IRecipientsData, RecipientsDataLinqToSQL> ();
+            if (!SimpleIoc.Default.IsRegistered<MailSenderDB>()) SimpleIoc.Default.Register(() => new MailSenderDB());
+
+            SimpleIoc.Default.Register<IRecipientsData, RecipientsDataInMemory>();
+            SimpleIoc.Default.Register<IRecipientsListData, RecipientsListDataInMemory>();
+            SimpleIoc.Default.Register<IServersData, ServersDataInMemory>();
+            SimpleIoc.Default.Register<IEmailMessageData, EmailMessagesDataInMemory>();
+            SimpleIoc.Default.Register<IMailsListData, MailsListDataInMemory>();
+            SimpleIoc.Default.Register<ISchedulerTaskData, SchedulerTasksDataInMemory>();
+            SimpleIoc.Default.Register<ISendersData, SendersDataInMemory>();
 
             //SimpleIoc.Default.Unregister<WpfMainWindowViewModel> ();
-            SimpleIoc.Default.Register<WpfMainWindowViewModel> ();
+            SimpleIoc.Default.Register<WpfMainWindowViewModel>();
 
         }
 
