@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMailSender", "MailSender\WpfMailSender.csproj", "{E2FF4F09-7122-4421-A8DD-0CB40174638E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B5E3A1B9-F156-4E31-A727-B5B21B59B4CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMailSender.lib", "WpfMailSender.lib\WpfMailSender.lib.csproj", "{D1B8A88A-9DDE-4066-B50F-DCD933819B5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMailSender.lib.Tests", "WpfMailSender.lib.Tests\WpfMailSender.lib.Tests.csproj", "{9CEE00F6-67F4-4ECC-9C93-4A6D97DB067B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2FF4F09-7122-4421-A8DD-0CB40174638E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2FF4F09-7122-4421-A8DD-0CB40174638E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2FF4F09-7122-4421-A8DD-0CB40174638E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2FF4F09-7122-4421-A8DD-0CB40174638E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1B8A88A-9DDE-4066-B50F-DCD933819B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1B8A88A-9DDE-4066-B50F-DCD933819B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1B8A88A-9DDE-4066-B50F-DCD933819B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1B8A88A-9DDE-4066-B50F-DCD933819B5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CEE00F6-67F4-4ECC-9C93-4A6D97DB067B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CEE00F6-67F4-4ECC-9C93-4A6D97DB067B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CEE00F6-67F4-4ECC-9C93-4A6D97DB067B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CEE00F6-67F4-4ECC-9C93-4A6D97DB067B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9CEE00F6-67F4-4ECC-9C93-4A6D97DB067B} = {B5E3A1B9-F156-4E31-A727-B5B21B59B4CE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F96E79F-2F89-4DE3-9FC5-910E5A50F257}
+	EndGlobalSection
+EndGlobal

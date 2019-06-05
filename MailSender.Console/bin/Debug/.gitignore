@@ -1,0 +1,3 @@
+*.Console.exe
+/MailSender.Console.exe.config
+/MailSender.Console.pdb

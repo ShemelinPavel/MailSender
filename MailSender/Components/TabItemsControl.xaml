@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="WpfMailSender.Components.TabItemsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfMailSender.Components"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="200"
+             DataContext="{Binding WpfMainWindowModel, Source={StaticResource Locator}}"
+             >
+    <UniformGrid Rows="1">
+        <Button Command="{Binding mvvvmClickLeftArrowTabItemsControlCommand}" Name="LeftArrowButton">
+            <fa:ImageAwesome Icon="ArrowCircleLeft"/>
+        </Button>
+        <Button Command="{Binding mvvvmClickRightArrowTabItemsControlCommand}" Name="RightArrowButton">
+            <fa:ImageAwesome Icon="ArrowCircleRight"/>
+        </Button>
+    </UniformGrid>
+</UserControl>
